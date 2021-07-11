@@ -1,8 +1,11 @@
-package com.free.freevideostreamingapi.like;
+package com.free.freevideostreamingapi.infrastructure.controller;
 
 
 import com.free.freevideostreamingapi.domain.model.User;
+import com.free.freevideostreamingapi.infrastructure.repository.LikeRepository;
 import com.free.freevideostreamingapi.infrastructure.repository.UserRepository;
+import com.free.freevideostreamingapi.domain.model.Like;
+import com.free.freevideostreamingapi.application.dto.VideoLikeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

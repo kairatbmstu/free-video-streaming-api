@@ -1,5 +1,6 @@
-package com.free.freevideostreamingapi.like;
+package com.free.freevideostreamingapi.infrastructure.repository;
 
+import com.free.freevideostreamingapi.domain.model.Like;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
 

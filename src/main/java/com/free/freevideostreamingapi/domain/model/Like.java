@@ -1,4 +1,4 @@
-package com.free.freevideostreamingapi.like;
+package com.free.freevideostreamingapi.domain.model;
 
 
 import lombok.Getter;
