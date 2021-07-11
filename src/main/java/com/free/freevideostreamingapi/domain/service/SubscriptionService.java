@@ -2,9 +2,9 @@ package com.free.freevideostreamingapi.domain.service;
 
 
 import com.free.freevideostreamingapi.application.dto.SubscriptionDto;
-import com.free.freevideostreamingapi.channel.Channel;
-import com.free.freevideostreamingapi.channel.ChannelDto;
-import com.free.freevideostreamingapi.channel.ChannelRepository;
+import com.free.freevideostreamingapi.domain.model.Channel;
+import com.free.freevideostreamingapi.application.dto.ChannelDto;
+import com.free.freevideostreamingapi.infrastructure.repository.ChannelRepository;
 import com.free.freevideostreamingapi.domain.model.Subscription;
 import com.free.freevideostreamingapi.infrastructure.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

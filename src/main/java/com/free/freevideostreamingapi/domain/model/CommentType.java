@@ -1,4 +1,4 @@
-package com.free.freevideostreamingapi.comments;
+package com.free.freevideostreamingapi.domain.model;
 
 public enum CommentType {
     VideoComment,PublicationComment

@@ -1,4 +1,4 @@
-package com.free.freevideostreamingapi.channel;
+package com.free.freevideostreamingapi.application.dto;
 
 import lombok.Getter;
 import lombok.Setter;

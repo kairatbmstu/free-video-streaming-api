@@ -1,4 +1,4 @@
-package com.free.freevideostreamingapi.channel;
+package com.free.freevideostreamingapi.domain.model;
 
 
 import lombok.Getter;
@@ -8,27 +8,32 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Table
 @Getter
 @Setter
-public class Channel {
+@Table("comment")
+public class Comment {
 
     @Id
     @PrimaryKey
     @Column("id")
     String id;
 
-    String userId;
+    @Column("parent_id")
+    String parentId;
 
-    @Column("title")
-    String title;
+    @Column("video_id")
+    String videoId;
 
-    @Column("description")
-    String description;
+    @Column("text")
+    String text;
 
-    @Column("subscribers_num")
-    int subsribersNum;
+    @Column("likes_num")
+    int likesNum;
+
+    @Column("created_at")
+    LocalDateTime created_at = LocalDateTime.now();
 
 }

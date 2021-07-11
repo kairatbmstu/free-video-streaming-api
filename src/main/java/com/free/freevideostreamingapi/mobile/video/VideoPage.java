@@ -1,6 +1,6 @@
 package com.free.freevideostreamingapi.mobile.video;
 
-import com.free.freevideostreamingapi.comments.Comment;
+import com.free.freevideostreamingapi.domain.model.Comment;
 import com.free.freevideostreamingapi.domain.model.Video;
 import lombok.Getter;
 import lombok.Setter;

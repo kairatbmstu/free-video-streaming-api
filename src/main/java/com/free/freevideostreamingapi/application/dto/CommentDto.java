@@ -1,4 +1,4 @@
-package com.free.freevideostreamingapi.comments;
+package com.free.freevideostreamingapi.application.dto;
 
 import lombok.Getter;
 

@@ -1,5 +1,8 @@
-package com.free.freevideostreamingapi.comments;
+package com.free.freevideostreamingapi.infrastructure.controller;
 
+import com.free.freevideostreamingapi.domain.model.Comment;
+import com.free.freevideostreamingapi.application.dto.CommentDto;
+import com.free.freevideostreamingapi.infrastructure.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

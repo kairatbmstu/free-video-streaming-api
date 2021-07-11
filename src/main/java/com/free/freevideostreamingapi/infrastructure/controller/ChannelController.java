@@ -1,7 +1,10 @@
-package com.free.freevideostreamingapi.channel;
+package com.free.freevideostreamingapi.infrastructure.controller;
 
 
 import com.free.freevideostreamingapi.application.dto.VideoDto;
+import com.free.freevideostreamingapi.domain.model.Channel;
+import com.free.freevideostreamingapi.application.dto.ChannelDto;
+import com.free.freevideostreamingapi.infrastructure.repository.ChannelRepository;
 import com.free.freevideostreamingapi.infrastructure.repository.VideoRepository;
 import com.free.freevideostreamingapi.exception.ObjectNotFound;
 import com.free.freevideostreamingapi.infrastructure.repository.SubscriptionRepository;
