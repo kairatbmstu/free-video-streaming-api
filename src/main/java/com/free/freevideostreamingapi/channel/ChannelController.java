@@ -1,10 +1,10 @@
 package com.free.freevideostreamingapi.channel;
 
 
-import com.free.freevideostreamingapi.video.VideoDto;
-import com.free.freevideostreamingapi.video.VideoRepository;
+import com.free.freevideostreamingapi.application.dto.VideoDto;
+import com.free.freevideostreamingapi.infrastructure.repository.VideoRepository;
 import com.free.freevideostreamingapi.exception.ObjectNotFound;
-import com.free.freevideostreamingapi.subsribe.SubscriptionRepository;
+import com.free.freevideostreamingapi.infrastructure.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

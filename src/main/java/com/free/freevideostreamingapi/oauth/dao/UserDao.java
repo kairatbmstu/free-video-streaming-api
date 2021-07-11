@@ -1,7 +1,7 @@
 package com.free.freevideostreamingapi.oauth.dao;
 
-import com.free.freevideostreamingapi.user.User;
-import com.free.freevideostreamingapi.user.UserRepository;
+import com.free.freevideostreamingapi.domain.model.User;
+import com.free.freevideostreamingapi.infrastructure.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

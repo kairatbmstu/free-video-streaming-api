@@ -1,6 +1,6 @@
 package com.free.freevideostreamingapi.oauth.service.impl;
 
-import com.free.freevideostreamingapi.user.UserRepository;
+import com.free.freevideostreamingapi.infrastructure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

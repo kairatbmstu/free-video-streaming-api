@@ -2,7 +2,7 @@ package com.free.freevideostreamingapi.mobile.channel;
 
 
 import com.free.freevideostreamingapi.playlist.Playlist;
-import com.free.freevideostreamingapi.video.VideoDto;
+import com.free.freevideostreamingapi.application.dto.VideoDto;
 
 import java.util.ArrayList;
 import java.util.List;

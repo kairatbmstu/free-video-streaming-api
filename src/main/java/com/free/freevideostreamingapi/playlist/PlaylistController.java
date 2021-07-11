@@ -1,7 +1,7 @@
 package com.free.freevideostreamingapi.playlist;
 
 
-import com.free.freevideostreamingapi.user.User;
+import com.free.freevideostreamingapi.domain.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

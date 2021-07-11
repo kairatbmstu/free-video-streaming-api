@@ -1,7 +1,7 @@
 package com.free.freevideostreamingapi.oauth.controller;
 
-import com.free.freevideostreamingapi.user.User;
-import com.free.freevideostreamingapi.user.UserRepository;
+import com.free.freevideostreamingapi.domain.model.User;
+import com.free.freevideostreamingapi.infrastructure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
