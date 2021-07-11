@@ -1,4 +1,4 @@
-package com.free.freevideostreamingapi.playlist;
+package com.free.freevideostreamingapi.application.dto;
 
 import com.free.freevideostreamingapi.application.dto.VideoDto;
 import lombok.Getter;

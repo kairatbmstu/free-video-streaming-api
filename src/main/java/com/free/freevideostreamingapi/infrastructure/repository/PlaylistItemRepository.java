@@ -1,5 +1,6 @@
-package com.free.freevideostreamingapi.playlist;
+package com.free.freevideostreamingapi.infrastructure.repository;
 
+import com.free.freevideostreamingapi.playlist.PlaylistItem;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
 
