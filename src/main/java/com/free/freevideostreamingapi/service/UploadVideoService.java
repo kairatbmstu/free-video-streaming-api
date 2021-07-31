@@ -24,7 +24,7 @@ public class UploadVideoService {
     VideoFilesConverter videoFilesConverter;
 
     @Transactional
-    public void upload(@RequestBody VideoUploadRequest videoUploadRequest) throws IOException {
+    public void upload(VideoUploadRequest videoUploadRequest) throws IOException {
 
         File tempDir = new File("/data/video/rawdata");
         if (!tempDir.exists()) {
