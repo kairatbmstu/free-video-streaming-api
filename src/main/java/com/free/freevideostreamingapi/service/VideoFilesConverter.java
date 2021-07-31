@@ -1,0 +1,121 @@
+package com.free.freevideostreamingapi.service;
+
+import com.free.freevideostreamingapi.entity.VideoFile;
+import com.free.freevideostreamingapi.repository.VideoFileRepository;
+import com.infinit.domain.AppFile;
+import com.infinit.domain.enumeration.AppFileStatus;
+import com.infinit.repository.AppFileRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+@Component
+@Slf4j
+public class VideoFilesConverter {
+
+    @Value("${app.tayyab.datapath}")
+    String appTayyabDatapath;
+
+    String COMMAND = "ffmpeg -i :input -c:a aac -strict experimental -c:v libx264" +
+            " -s :video_resolution -aspect 16:9 -f hls -hls_list_size 0 -hls_time :hls_time :output";
+
+    @Autowired
+    VideoFileRepository videoFileRepository;
+
+    public void videoFilesProcessing(VideoFile videoFile) throws IOException, InterruptedException {
+        log.info(" Start Video File Processing...");
+
+        if (videoFile == null) {
+            log.info("videoFile is null");
+            return;
+        }
+
+        try {
+            log.info("appfile.getInputDir(): " + videoFile.getInputDir());
+            log.info("appfile.getOutputDir(): " + videoFile.getOutputDir());
+            videoFileRepository.save(videoFile);
+            String input = videoFile.getInputDir() + "/" + videoFile.getOriginalFilename();
+            String outputDir = videoFile.getOutputDir();
+            File dirout = new File(outputDir);
+            dirout.mkdirs();
+
+            int exitCode = 0;
+            exitCode = performCommand(input, outputDir, "240_out.m3u8", "360x240", "2");
+            if (exitCode != 0) {
+                return;
+            }
+            exitCode = performCommand(input, outputDir, "360_out.m3u8", "480x360", "2");
+            if (exitCode != 0) {
+                return;
+            }
+            exitCode = performCommand(input, outputDir, "480_out.m3u8", "858x480", "1");
+            if (exitCode != 0) {
+                return;
+            }
+            exitCode = performCommand(input, outputDir, "720_out.m3u8", "1280x720", "1");
+            if (exitCode != 0) {
+                return;
+            }
+
+            M3u8FilesMerger m3u8FilesMerger = new M3u8FilesMerger();
+            m3u8FilesMerger.setOutput(outputDir, "media.m3u8");
+            m3u8FilesMerger.addM3u8File("240_out.m3u8", "213000", "360x240");
+            m3u8FilesMerger.addM3u8File("360_out.m3u8", "445000", "480x360");
+            m3u8FilesMerger.addM3u8File("480_out.m3u8", "998000", "858x480");
+            m3u8FilesMerger.addM3u8File("720_out.m3u8", "1896000", "1280x720");
+            m3u8FilesMerger.flush();
+
+            videoFileRepository.save(appfile);
+        } catch (Exception e) {
+            log.error("Video files processing is failed...", e);
+        }
+    }
+
+    /**
+     * https://www.quora.com/What-are-these-240p-360p-480p-720p-1080p-units-for-videos-Whats-the-basic-idea-behind-it
+     * 240p = 352 x 240
+     * 360 p = 480 x 360
+     * 480p = 858 x 480 — also known as SD
+     * 720p = 1280 x 720 — the old TVs of this resolution were marked HDready
+     * 1080p = 1920 x 1080 — FullHD
+     * 2160p = 3860 x 2160 —Ultra-HD, also known as 4K (that’s a marketing trick)
+     */
+
+    /**
+     * 1. For 352x240
+     * ffmpeg -i input.mp4 -c:a aac -strict experimental -c:v libx264 -s 360x240 -aspect 16:9 -f hls -hls_list_size 0 -hls_time 10 240_out.m3u8
+     * 2. For 480x360
+     * ffmpeg -i input.mp4 -c:a aac -strict experimental -c:v libx264 -s 480x360 -aspect 16:9 -f hls -hls_list_size 0 -hls_time 10 360_out.m3u8
+     * 3. For 858x480
+     * ffmpeg -i input.mp4 -c:a aac -strict experimental -c:v libx264 -s 858x480 -aspect 16:9 -f hls -hls_list_size 0 -hls_time 5 480_out.m3u8
+     * 4. For 1280x720
+     * ffmpeg -i input.mp4 -c:a aac -strict experimental -c:v libx264 -s 1280x720 -aspect 16:9 -f hls -hls_list_size 0 -hls_time 2 720_out.m3u8
+     */
+    private int performCommand(String input, String outputDir, String outputM3u8Filename, String videoResolution, String hls_time) throws IOException, InterruptedException {
+        Process process = Runtime.getRuntime()
+                .exec(COMMAND.replaceAll(":input", input)
+                        .replaceAll(":output", outputDir + "/" + outputM3u8Filename)
+                        .replaceAll(":video_resolution", videoResolution)
+                        .replaceAll(":hls_time", hls_time));
+        try (BufferedReader r = new BufferedReader(
+                new InputStreamReader(process.getErrorStream()))) {
+            String line = null;
+            while ((line = r.readLine()) != null) {
+                log.info(line);
+            }
+            int exitCode = process.waitFor();
+            log.info("exitCode : " + exitCode);
+            return exitCode;
+        }
+    }
+
+
+}
+
+
