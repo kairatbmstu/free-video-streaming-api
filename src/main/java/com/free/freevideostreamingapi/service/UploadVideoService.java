@@ -20,8 +20,11 @@ public class UploadVideoService {
     @Autowired
     VideoFileRepository videoFileRepository;
 
+    @Autowired
+    VideoFilesConverter videoFilesConverter;
+
     @Transactional
-    public void upload(@RequestBody VideoUploadRequest videoUploadRequest) throws IOException {
+    public void upload(VideoUploadRequest videoUploadRequest) throws IOException {
 
         File tempDir = new File("/data/video/rawdata");
         if (!tempDir.exists()) {
@@ -46,7 +49,13 @@ public class UploadVideoService {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-
+                try {
+                    videoFilesConverter.videoFilesProcessing(videoFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

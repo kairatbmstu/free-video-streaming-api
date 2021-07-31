@@ -33,8 +33,8 @@ public class UserService {
         if (exists != null) {
             throw new EmailAlreadyExists();
         }
-        List<User> users = userRepository.findByUsername(userDto.getUsername());
-        if (!users.isEmpty()) {
+        User userByUsername = userRepository.findByUsername(userDto.getUsername());
+        if (userByUsername != null) {
             throw new UsernameAlreadyExists();
         }
         User user = new User();

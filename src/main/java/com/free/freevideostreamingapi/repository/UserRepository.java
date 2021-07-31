@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserRepository extends CassandraRepository<User, String> {
 
     @Query("select * from user where username = :username ALLOW FILTERING")
-    List<User> findByUsername(@Param("username") String username);
+    User findByUsername(@Param("username") String username);
 
     @Query("select * from user where email = :email ALLOW FILTERING")
     User findByEmail(@Param("email") String email);
