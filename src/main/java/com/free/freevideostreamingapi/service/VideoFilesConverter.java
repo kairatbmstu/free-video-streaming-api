@@ -2,25 +2,17 @@ package com.free.freevideostreamingapi.service;
 
 import com.free.freevideostreamingapi.entity.VideoFile;
 import com.free.freevideostreamingapi.repository.VideoFileRepository;
-import com.infinit.domain.AppFile;
-import com.infinit.domain.enumeration.AppFileStatus;
-import com.infinit.repository.AppFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.Charset;
 
 @Component
 @Slf4j
 public class VideoFilesConverter {
-
-    @Value("${app.tayyab.datapath}")
-    String appTayyabDatapath;
 
     String COMMAND = "ffmpeg -i :input -c:a aac -strict experimental -c:v libx264" +
             " -s :video_resolution -aspect 16:9 -f hls -hls_list_size 0 -hls_time :hls_time :output";
@@ -71,7 +63,6 @@ public class VideoFilesConverter {
             m3u8FilesMerger.addM3u8File("720_out.m3u8", "1896000", "1280x720");
             m3u8FilesMerger.flush();
 
-            videoFileRepository.save(appfile);
         } catch (Exception e) {
             log.error("Video files processing is failed...", e);
         }
@@ -119,3 +110,45 @@ public class VideoFilesConverter {
 }
 
 
+
+/**
+ * #EXTM3U
+ * #EXT-X-VERSION:4
+ * #EXT-X-STREAM-INF:BANDWIDTH=1896000,AVERAGE-BANDWIDTH=1649000,RESOLUTION=1280x720,CLOSED-CAPTIONS=NONE,CODECS="avc1.4d001e,mp4a.40.2"
+ * 720.m3u8
+ * #EXT-X-STREAM-INF:BANDWIDTH=998000,AVERAGE-BANDWIDTH=868000,RESOLUTION=640x480,CLOSED-CAPTIONS=NONE,CODECS="avc1.4d001e,mp4a.40.5"
+ * 480.m3u8
+ * #EXT-X-STREAM-INF:BANDWIDTH=445000,AVERAGE-BANDWIDTH=387000,RESOLUTION=480x360,CLOSED-CAPTIONS=NONE,CODECS="avc1.4d001e,mp4a.40.5"
+ * 360.m3u8
+ * #EXT-X-STREAM-INF:BANDWIDTH=213000,AVERAGE-BANDWIDTH=186000,RESOLUTION=360x240,CLOSED-CAPTIONS=NONE,CODECS="avc1.4d001e,mp4a.40.5"
+ * 240.m3u8
+ */
+class M3u8FilesMerger {
+    StringBuilder result = new StringBuilder();
+    File outputFile;
+
+    public M3u8FilesMerger() {
+        result.append("#EXTM3U\n");
+        result.append("#EXT-X-VERSION:4\n");
+    }
+
+    public void setOutput(String outputDir, String outputM3u8Filename) {
+        outputFile = new File(outputDir + "/" + outputM3u8Filename);
+    }
+
+    public void addM3u8File(String m3u8File, String bandwith, String resolution) {
+        result.append("#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=" + bandwith + ",RESOLUTION=" + resolution + "\n");
+        result.append(m3u8File + "\n");
+    }
+
+    public void flush() {
+        try {
+            try (FileOutputStream fos = new FileOutputStream(outputFile)) {
+                fos.write(result.toString().getBytes(Charset.forName("UTF-8")));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
