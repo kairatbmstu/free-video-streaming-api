@@ -11,7 +11,7 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 import java.sql.ResultSet;
 
 @Configuration
-@EnableCassandraRepositories(basePackages = "com.yutech.yutechvideostreamingapi")
+@EnableCassandraRepositories(basePackages = "com.free.freevideostreamingapi")
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Override
@@ -21,12 +21,12 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Override
     public SchemaAction getSchemaAction() {
-        return SchemaAction.CREATE_IF_NOT_EXISTS;
+        return SchemaAction.NONE;
     }
 
     @Override
     public String[] getEntityBasePackages() {
-        return new String[]{"com.yutech.yutechvideostreamingapi"};
+        return new String[]{"com.free.freevideostreamingapi"};
     }
 
 }
