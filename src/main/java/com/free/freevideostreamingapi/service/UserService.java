@@ -47,7 +47,7 @@ public class UserService {
         List<String> roles = new ArrayList();
         roles.add("ROLE_USER");
         user.setRoles(roles);
-        user = userRepository.save(user);
+        userRepository.save(user);
     }
 
 }

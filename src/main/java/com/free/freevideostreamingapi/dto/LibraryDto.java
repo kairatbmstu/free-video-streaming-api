@@ -1,15 +1,17 @@
 package com.free.freevideostreamingapi.dto;
 
-import com.free.freevideostreamingapi.entity.Playlist;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
-public class LibraryPage {
+public class LibraryDto {
 
-    List<Playlist> playlistList;
+    UUID id;
+    String userId;
+    List<String> playlistIds;
 
 }
