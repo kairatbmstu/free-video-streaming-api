@@ -6,6 +6,7 @@ import com.free.freevideostreamingapi.repository.LikeRepository;
 import com.free.freevideostreamingapi.repository.UserRepository;
 import com.free.freevideostreamingapi.entity.Like;
 import com.free.freevideostreamingapi.dto.VideoLikeDto;
+import com.free.freevideostreamingapi.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -17,35 +18,14 @@ import java.util.UUID;
 public class LikeController {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    LikeRepository likeRepository;
+    LikeService likeService;
 
     @PostMapping("/videos/{videoId}/likes")
     public VideoLikeDto postLike(@PathVariable String videoId) {
         if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (user != null) {
-                Like like = likeRepository.findFirstByUserIdAndVideoId(user.getId(), videoId);
-                if (like==null) {
-                    like = new Like();
-                    like.setId(UUID.randomUUID().toString());
-                    like.setUserId(user.getId());
-                    like.setVideoId(videoId);
-                    like = likeRepository.save(like);
-                    VideoLikeDto videoLikeDto = new VideoLikeDto();
-                    videoLikeDto.setId(like.getId());
-                    videoLikeDto.setUserId(like.getUserId());
-                    videoLikeDto.setVideoId(like.getVideoId());
-                    return videoLikeDto;
-                } else {
-                    VideoLikeDto videoLikeDto = new VideoLikeDto();
-                    videoLikeDto.setId(like.getId());
-                    videoLikeDto.setUserId(like.getUserId());
-                    videoLikeDto.setVideoId(like.getVideoId());
-                    return videoLikeDto;
-                }
+                return likeService.postLike(user.getId(), videoId);
             }
         }
         return null;
@@ -56,8 +36,7 @@ public class LikeController {
         if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (user != null) {
-                Like like = likeRepository.findFirstByUserIdAndVideoId(user.getId(), videoId);
-                likeRepository.delete(like);
+                likeService.deleteLikeByVideoId(user.getId(), videoId);
             }
         }
     }
@@ -65,12 +44,17 @@ public class LikeController {
 
     @PostMapping("/comments/{commentId}/likes")
     public void likeComment(@PathVariable String commentId){
-
+        likeService.likeComment(commentId);
     }
 
     @DeleteMapping("/comments/{commentId}/likes")
     public void deleteLikeComment(@PathVariable String commentId){
-
+        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (user != null) {
+                likeService.deleteLikeByCommentId(user.getId(), commentId);
+            }
+        }
     }
 
 }
