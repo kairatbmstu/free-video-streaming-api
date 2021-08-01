@@ -45,6 +45,7 @@ public class UploadVideoService {
         videoFile.setDescription(videoUploadRequest.getDescription());
         videoFile.setInputDir("/data/video/rawdata/");
         videoFile.setOutputDir("/data/video/hlsdata/"+id+"/");
+        videoFile.setManifestFile("media.m3u8");
 
         Thread thread = new Thread(new Runnable() {
             @Override
