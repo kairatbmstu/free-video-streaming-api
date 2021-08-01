@@ -1,6 +1,6 @@
 package com.free.freevideostreamingapi.exception;
 
-public class UsernameAlreadyExists extends RuntimeException  {
+public class UsernameAlreadyExists extends DefaultException  {
 
     String code = "username_already_exists";
 

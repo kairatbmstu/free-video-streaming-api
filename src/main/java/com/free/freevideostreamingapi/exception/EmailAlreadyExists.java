@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EmailAlreadyExists extends RuntimeException {
+public class EmailAlreadyExists extends DefaultException {
 
     String code = "email_already_exists";
 

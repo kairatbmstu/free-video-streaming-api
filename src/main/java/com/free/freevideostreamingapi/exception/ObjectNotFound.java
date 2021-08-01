@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ObjectNotFound extends RuntimeException {
+public class ObjectNotFound extends DefaultException {
 
     String code = "object_not_found";
 
