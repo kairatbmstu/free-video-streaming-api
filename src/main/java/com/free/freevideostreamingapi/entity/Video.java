@@ -31,9 +31,6 @@ public class Video {
     @Column("description")
     String description;
 
-    //video file
-    String videoFileId;
-
     @Embedded.Empty
     VideoStats videoStats;
 
@@ -45,6 +42,9 @@ public class Video {
 
     @Column("channel_id")
     String channelId;
+
+    @Column("video_file_id")
+    String videoFileId;
 
     @Override
     public boolean equals(Object o) {
