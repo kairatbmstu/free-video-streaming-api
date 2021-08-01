@@ -39,5 +39,8 @@ public class VideoFile {
     @Column("original_filename")
     String originalFilename;
 
+    @Column("content_type")
+    String contentType;
+
 
 }

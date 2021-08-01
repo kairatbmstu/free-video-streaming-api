@@ -6,9 +6,6 @@ import com.free.freevideostreamingapi.repository.VideoFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,17 +43,17 @@ public class UploadVideoService {
         videoFile.setInputDir("/data/video/rawdata/");
         videoFile.setOutputDir("/data/video/hlsdata/"+id+"/");
         videoFile.setManifestFile("media.m3u8");
+        videoFile.setFilename(videoUploadRequest.getFile().getName());
+        videoFile.setOriginalFilename(videoUploadRequest.getFile().getName());
+        videoFile.setContentType(videoUploadRequest.getFile().getContentType());
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    videoFilesConverter.videoFilesProcessing(videoFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        Thread thread = new Thread(() -> {
+            try {
+                videoFilesConverter.videoFilesProcessing(videoFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
 
