@@ -15,6 +15,6 @@ public class PlaylistDto {
 
     String userId;
 
-    List<PlaylistItemDto> items = new ArrayList<PlaylistItemDto>();
+    List<PlaylistItemDto> items;
 
 }

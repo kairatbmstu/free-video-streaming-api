@@ -11,7 +11,6 @@ import com.free.freevideostreamingapi.infrastucture.repository.VideoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,6 +49,28 @@ public class ChannelService {
         List<VideoDto> videoDtos = new ArrayList<>();
         videoRepository.findByChannelId(channelId);
         return videoDtos;
+    }
+
+    public ChannelDto createChannel(ChannelDto channelDto){
+        ChannelEntity channel = new ChannelEntity();
+        channel.setId(channelDto.getId());
+        channel.setDescription(channelDto.getDescription());
+        channel.setSubsribersNum(channelDto.getSubsribersNum());
+        channel.setTitle(channelDto.getTitle());
+        channel.setUserId(channelDto.getUserId());
+        channelRepository.save(channel);
+        return channelDto;
+    }
+
+    public ChannelDto updateChannel(ChannelDto channelDto){
+        ChannelEntity channel = new ChannelEntity();
+        channel.setId(channelDto.getId());
+        channel.setDescription(channelDto.getDescription());
+        channel.setSubsribersNum(channelDto.getSubsribersNum());
+        channel.setTitle(channelDto.getTitle());
+        channel.setUserId(channelDto.getUserId());
+        channelRepository.save(channel);
+        return channelDto;
     }
 
 }
