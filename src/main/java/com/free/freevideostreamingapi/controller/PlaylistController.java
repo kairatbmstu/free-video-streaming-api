@@ -1,51 +1,50 @@
 package com.free.freevideostreamingapi.controller;
 
-
 import com.free.freevideostreamingapi.entity.User;
-import com.free.freevideostreamingapi.repository.PlaylistItemRepository;
-import com.free.freevideostreamingapi.repository.PlaylistRepository;
+import com.free.freevideostreamingapi.service.PlaylistService;
+import com.free.freevideostreamingapi.dto.PlaylistDto;
 import com.free.freevideostreamingapi.entity.Playlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequestMapping("/api/v1")
 public class PlaylistController {
 
     @Autowired
-    PlaylistRepository playlistRepository;
-
-    @Autowired
-    PlaylistItemRepository playlistItemRepository;
+    PlaylistService playlistService;
 
     @GetMapping("/playlists")
-    public void getAllPlaylist() {
+    public List<Playlist> getAllPlaylist() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user != null) {
-            List<Playlist> playlists =  playlistRepository.findByUserId(user.getId());
+            return playlistService.findPlaylistsByUserId(user.getId());
         }
+
+        return Collections.emptyList();
     }
 
     @GetMapping("/playlists/{id}")
-    public void getPlaylist() {
-
+    public void getPlaylistById(@PathVariable String id) {
+        
     }
 
     @PostMapping("/playlists")
-    public void postPlayList() {
-
+    public void postPlayList(@RequestBody PlaylistDto playlistDto) {
+        playlistService.postPlayList(playlistDto);
     }
 
     @PutMapping("/playlists")
-    public void putPlaylist() {
-
+    public void putPlaylist(@RequestBody PlaylistDto playlistDto) {
+        playlistService.putPlaylist(playlistDto);
     }
 
     @DeleteMapping("/playlists/{id}")
-    public void deletePlaylist() {
-
+    public void deletePlaylist(@PathVariable String id) {
+        playlistService.deletePlaylistId(id);
     }
 
 
