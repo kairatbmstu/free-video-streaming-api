@@ -29,7 +29,7 @@ public class UploadVideoService {
         }
 
         String id = UUID.randomUUID().toString();
-        File file = new File("/data/video/rawdata/" + id);
+        File file = new File("/data/video/rawdata/" + videoUploadRequest.getFile().getOriginalFilename());
         byte[] bytes = videoUploadRequest.getFile().getBytes();
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(bytes);
@@ -44,7 +44,7 @@ public class UploadVideoService {
         videoFile.setOutputDir("/data/video/hlsdata/"+id+"/");
         videoFile.setManifestFile("media.m3u8");
         videoFile.setFilename(videoUploadRequest.getFile().getName());
-        videoFile.setOriginalFilename(videoUploadRequest.getFile().getName());
+        videoFile.setOriginalFilename(videoUploadRequest.getFile().getOriginalFilename());
         videoFile.setContentType(videoUploadRequest.getFile().getContentType());
 
         Thread thread = new Thread(() -> {
