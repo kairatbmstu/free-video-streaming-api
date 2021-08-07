@@ -29,6 +29,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .antMatchers(
                         "/oauth/user/registration",
                         "/open/hello",
+                        "/api/v1/video-streaming/**",
                         "/swagger-ui.html"
                 ).permitAll()
                 .antMatchers(

@@ -29,11 +29,12 @@ public class VideoFilesConverter {
         }
 
         try {
-            log.info("appfile.getInputDir(): " + videoFile.getInputDir());
-            log.info("appfile.getOutputDir(): " + videoFile.getOutputDir());
+            log.info("appfile.getInputDir(): ", videoFile.getInputDir());
+            log.info("appfile.getOutputDir(): ", videoFile.getOutputDir());
             videoFileRepository.save(videoFile);
-            String input = videoFile.getInputDir() + "/" + videoFile.getOriginalFilename();
+            String input = videoFile.getInputDir()  + videoFile.getOriginalFilename();
             String outputDir = videoFile.getOutputDir();
+            log.info("outputDir : ", videoFile.getOutputDir());
             File dirout = new File(outputDir);
             dirout.mkdirs();
 
@@ -89,6 +90,11 @@ public class VideoFilesConverter {
      * ffmpeg -i input.mp4 -c:a aac -strict experimental -c:v libx264 -s 1280x720 -aspect 16:9 -f hls -hls_list_size 0 -hls_time 2 720_out.m3u8
      */
     private int performCommand(String input, String outputDir, String outputM3u8Filename, String videoResolution, String hls_time) throws IOException, InterruptedException {
+        System.out.println("input : " + input);
+        System.out.println("outputDir : " + outputDir);
+        System.out.println("outputM3u8Filename : " + outputM3u8Filename);
+        System.out.println("videoResolution : " + videoResolution);
+        System.out.println("hls_time : " + hls_time);
         Process process = Runtime.getRuntime()
                 .exec(COMMAND.replaceAll(":input", input)
                         .replaceAll(":output", outputDir + "/" + outputM3u8Filename)
