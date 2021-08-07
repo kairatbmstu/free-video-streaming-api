@@ -22,12 +22,26 @@ public class PlaylistService {
     @Autowired
     PlaylistItemRepository playlistItemRepository;
 
-    public List<Playlist> findPlaylistsByUserId(String userId){
-        return playlistRepository.findByUserId(userId);
+    public List<PlaylistDto> findPlaylistsByUserId(String userId){
+        List<Playlist> pls = playlistRepository.findByUserId(userId);
+        List<PlaylistDto> dtoList = new ArrayList();
+        for (Playlist pl : pls){
+            PlaylistDto dto = new PlaylistDto();
+            dto.setId(pl.getId());
+            dto.setUserId(pl.getUserId());
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 
-    public Playlist getPlaylistById(String id) {
-        return playlistRepository.findById(id).get();
+    public PlaylistDto getPlaylistById(String id) {
+        Playlist pl = playlistRepository.findById(id).get();
+        PlaylistDto playlistDto = new PlaylistDto();
+        playlistDto.setId(pl.getId());
+        playlistDto.setUserId(pl.getUserId());
+        List<PlaylistItemDto> items = new ArrayList();
+        playlistDto.setItems(items);
+        return playlistDto;
     }
 
     public void postPlayList(PlaylistDto playlistDto) {

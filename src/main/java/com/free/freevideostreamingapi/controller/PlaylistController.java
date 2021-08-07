@@ -3,6 +3,7 @@ package com.free.freevideostreamingapi.controller;
 import com.free.freevideostreamingapi.entity.User;
 import com.free.freevideostreamingapi.service.PlaylistService;
 import com.free.freevideostreamingapi.dto.PlaylistDto;
+import com.free.freevideostreamingapi.dto.PlaylistItemDto;
 import com.free.freevideostreamingapi.entity.Playlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,28 +19,29 @@ public class PlaylistController {
     PlaylistService playlistService;
 
     @GetMapping("/playlists")
-    public List<Playlist> getAllPlaylist() {
+    public List<PlaylistDto> getAllPlaylist() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user != null) {
             return playlistService.findPlaylistsByUserId(user.getId());
         }
-
         return Collections.emptyList();
     }
 
     @GetMapping("/playlists/{id}")
-    public void getPlaylistById(@PathVariable String id) {
-        
+    public PlaylistDto getPlaylistById(@PathVariable String id) {
+        return playlistService.getPlaylistById(id);
     }
 
     @PostMapping("/playlists")
-    public void postPlayList(@RequestBody PlaylistDto playlistDto) {
+    public PlaylistDto postPlayList(@RequestBody PlaylistDto playlistDto) {
         playlistService.postPlayList(playlistDto);
+        return playlistService.getPlaylistById(playlistDto.getId());
     }
 
     @PutMapping("/playlists")
-    public void putPlaylist(@RequestBody PlaylistDto playlistDto) {
+    public PlaylistDto putPlaylist(@RequestBody PlaylistDto playlistDto) {
         playlistService.putPlaylist(playlistDto);
+        return playlistService.getPlaylistById(playlistDto.getId());
     }
 
     @DeleteMapping("/playlists/{id}")
@@ -49,8 +51,8 @@ public class PlaylistController {
 
 
     @GetMapping("/playlists/{id}/items")
-    public void getPlaylistItems() {
-
+    public List<PlaylistItemDto> getPlaylistItems(@PathVariable String id) {
+        return playlistService.getPlaylistById(id).getItems();
     }
 
     @PostMapping("/playlists/{id}/items")
