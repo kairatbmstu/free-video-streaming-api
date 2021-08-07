@@ -56,13 +56,13 @@ public class VideoFilesConverter {
                 return;
             }
 
-            M3u8FilesMerger m3u8FilesMerger = new M3u8FilesMerger();
-            m3u8FilesMerger.setOutput(outputDir, "media.m3u8");
-            m3u8FilesMerger.addM3u8File("240_out.m3u8", "213000", "360x240");
-            m3u8FilesMerger.addM3u8File("360_out.m3u8", "445000", "480x360");
-            m3u8FilesMerger.addM3u8File("480_out.m3u8", "998000", "858x480");
-            m3u8FilesMerger.addM3u8File("720_out.m3u8", "1896000", "1280x720");
-            m3u8FilesMerger.flush();
+            M3u8FileBuilder m3u8FilesBuilder = new M3u8FileBuilder();
+            m3u8FilesBuilder.setOutput(outputDir, "media.m3u8");
+            m3u8FilesBuilder.addM3u8File("240_out.m3u8", "213000", "360x240");
+            m3u8FilesBuilder.addM3u8File("360_out.m3u8", "445000", "480x360");
+            m3u8FilesBuilder.addM3u8File("480_out.m3u8", "998000", "858x480");
+            m3u8FilesBuilder.addM3u8File("720_out.m3u8", "1896000", "1280x720");
+            m3u8FilesBuilder.flush();
 
         } catch (Exception e) {
             log.error("Video files processing is failed...", e);
@@ -129,11 +129,11 @@ public class VideoFilesConverter {
  * #EXT-X-STREAM-INF:BANDWIDTH=213000,AVERAGE-BANDWIDTH=186000,RESOLUTION=360x240,CLOSED-CAPTIONS=NONE,CODECS="avc1.4d001e,mp4a.40.5"
  * 240.m3u8
  */
-class M3u8FilesMerger {
+class M3u8FileBuilder {
     StringBuilder result = new StringBuilder();
     File outputFile;
 
-    public M3u8FilesMerger() {
+    public M3u8FileBuilder() {
         result.append("#EXTM3U\n");
         result.append("#EXT-X-VERSION:4\n");
     }
