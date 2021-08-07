@@ -28,7 +28,6 @@ public class VideoController {
        return videoService.findVideoById(id);
     }
 
-
     @DeleteMapping(value = "/api/v1/videos/{id}")
     public void deleteVideo(@PathVariable String id) {
         videoService.deleteVideo(id);

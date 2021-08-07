@@ -19,6 +19,8 @@ public class ChannelDto {
 
     int subsribersNum;
 
+    String userId;
+
     public ChannelDto(String id, String title, String description, int subsribersNum) {
         this.id = id;
         this.title = title;

@@ -2,16 +2,12 @@ package com.free.freevideostreamingapi.controller;
 
 
 import com.free.freevideostreamingapi.entity.User;
-import com.free.freevideostreamingapi.repository.LikeRepository;
-import com.free.freevideostreamingapi.repository.UserRepository;
-import com.free.freevideostreamingapi.entity.Like;
 import com.free.freevideostreamingapi.dto.VideoLikeDto;
 import com.free.freevideostreamingapi.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/")
