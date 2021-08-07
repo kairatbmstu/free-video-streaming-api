@@ -1,7 +1,8 @@
 package com.free.freevideostreamingapi.service;
 
-import com.free.freevideostreamingapi.entity.User;
-import com.free.freevideostreamingapi.repository.UserRepository;
+import com.free.freevideostreamingapi.infrastucture.entity.UserEntity;
+import com.free.freevideostreamingapi.infrastucture.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,8 +22,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("login by : " + username);
 
-        User user1 = userRepository.findByEmail(username);
-        User user2 = userRepository.findByUsername(username);
+        UserEntity user1 = userRepository.findByEmail(username);
+        UserEntity user2 = userRepository.findByUsername(username);
         if (user1 == null && user2 == null) {
             throw new UsernameNotFoundException("username or email is not found");
         }

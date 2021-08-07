@@ -1,11 +1,12 @@
 package com.free.freevideostreamingapi.service;
 
 
-import com.free.freevideostreamingapi.dto.VideoLikeDto;
-import com.free.freevideostreamingapi.entity.Like;
-import com.free.freevideostreamingapi.entity.User;
-import com.free.freevideostreamingapi.repository.LikeRepository;
-import com.free.freevideostreamingapi.repository.UserRepository;
+import com.free.freevideostreamingapi.application.dto.VideoLikeDto;
+import com.free.freevideostreamingapi.infrastucture.entity.LikeEntity;
+import com.free.freevideostreamingapi.infrastucture.entity.UserEntity;
+import com.free.freevideostreamingapi.infrastucture.repository.LikeRepository;
+import com.free.freevideostreamingapi.infrastucture.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,9 @@ public class LikeService {
     LikeRepository likeRepository;
 
     public VideoLikeDto postLike(String userId, String videoId) {
-        Like like = likeRepository.findFirstByUserIdAndVideoId(userId, videoId);
+        LikeEntity like = likeRepository.findFirstByUserIdAndVideoId(userId, videoId);
         if (like == null) {
-            like = new Like();
+            like = new LikeEntity();
             like.setId(UUID.randomUUID().toString());
             like.setUserId(userId);
             like.setVideoId(videoId);
@@ -44,7 +45,7 @@ public class LikeService {
     }
 
     public void deleteLikeByVideoId(String userId, String videoId) {
-        Like like = likeRepository.findFirstByUserIdAndVideoId(userId, videoId);
+        LikeEntity like = likeRepository.findFirstByUserIdAndVideoId(userId, videoId);
         likeRepository.delete(like);
     }
 

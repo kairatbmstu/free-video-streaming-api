@@ -1,8 +1,9 @@
 package com.free.freevideostreamingapi.service;
 
-import com.free.freevideostreamingapi.dto.VideoUploadRequest;
-import com.free.freevideostreamingapi.entity.VideoFile;
-import com.free.freevideostreamingapi.repository.VideoFileRepository;
+import com.free.freevideostreamingapi.application.dto.VideoUploadRequest;
+import com.free.freevideostreamingapi.infrastucture.entity.VideoFileEntity;
+import com.free.freevideostreamingapi.infrastucture.repository.VideoFileRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,7 @@ public class UploadVideoService {
             fileOutputStream.flush();
         }
 
-        VideoFile videoFile = new VideoFile();
+        VideoFileEntity videoFile = new VideoFileEntity();
         videoFile.setId(id);
         videoFile.setTitle(videoUploadRequest.getTitle());
         videoFile.setDescription(videoUploadRequest.getDescription());

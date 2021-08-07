@@ -1,10 +1,11 @@
 package com.free.freevideostreamingapi.service;
 
-import com.free.freevideostreamingapi.dto.VideoDto;
-import com.free.freevideostreamingapi.entity.Video;
-import com.free.freevideostreamingapi.entity.VideoStats;
-import com.free.freevideostreamingapi.repository.VideoReactiveRepository;
-import com.free.freevideostreamingapi.repository.VideoRepository;
+import com.free.freevideostreamingapi.application.dto.VideoDto;
+import com.free.freevideostreamingapi.infrastucture.entity.VideoEntity;
+import com.free.freevideostreamingapi.infrastucture.entity.VideoStats;
+import com.free.freevideostreamingapi.infrastucture.repository.VideoReactiveRepository;
+import com.free.freevideostreamingapi.infrastucture.repository.VideoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class VideoService {
     VideoReactiveRepository videoReactiveRepository;
 
     public VideoDto postVideo(@Valid @RequestBody VideoDto videoDto) {
-        Video video = new Video();
+        VideoEntity video = new VideoEntity();
         video.setId(UUID.randomUUID().toString());
         video.setTitle(videoDto.getTitle());
         video.setDescription(videoDto.getDescription());
@@ -40,7 +41,7 @@ public class VideoService {
     }
 
     public VideoDto putVideo(@Valid @RequestBody VideoDto videoDto) {
-        Video video = new Video();
+        VideoEntity video = new VideoEntity();
         video.setId(videoDto.getId());
         video.setTitle(videoDto.getTitle());
         video.setDescription(videoDto.getDescription());
@@ -55,11 +56,11 @@ public class VideoService {
     }
 
     public ResponseEntity<VideoDto> findVideoById(@PathVariable String id) {
-        Optional<Video> opt = videoRepository.findById(id);
+        Optional<VideoEntity> opt = videoRepository.findById(id);
         if (!opt.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        Video video = opt.get();
+        VideoEntity video = opt.get();
         VideoDto videoDto = new VideoDto();
         videoDto.setId(video.getId());
         videoDto.setTitle(video.getTitle());

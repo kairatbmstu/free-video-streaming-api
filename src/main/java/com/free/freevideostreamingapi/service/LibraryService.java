@@ -1,8 +1,9 @@
 package com.free.freevideostreamingapi.service;
 
 
-import com.free.freevideostreamingapi.entity.Library;
-import com.free.freevideostreamingapi.repository.LibraryRepository;
+import com.free.freevideostreamingapi.infrastucture.entity.LibraryEntity;
+import com.free.freevideostreamingapi.infrastucture.repository.LibraryRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,7 @@ public class LibraryService {
     LibraryRepository libraryRepository;
 
     @Transactional
-    public Library save(Library library) {
+    public LibraryEntity save(LibraryEntity library) {
         return libraryRepository.save(library);
     }
 

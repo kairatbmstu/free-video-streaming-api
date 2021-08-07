@@ -1,9 +1,10 @@
 package com.free.freevideostreamingapi.service;
 
-import com.free.freevideostreamingapi.entity.User;
 import com.free.freevideostreamingapi.exception.EmailAlreadyExists;
 import com.free.freevideostreamingapi.exception.UsernameAlreadyExists;
-import com.free.freevideostreamingapi.repository.UserRepository;
+import com.free.freevideostreamingapi.infrastucture.entity.UserEntity;
+import com.free.freevideostreamingapi.infrastucture.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,16 +29,16 @@ public class UserService {
 
 
     @Transactional
-    public void registration(@RequestBody User userDto){
-        User exists = userRepository.findByEmail(userDto.getEmail());
+    public void registration(@RequestBody UserEntity userDto){
+        UserEntity exists = userRepository.findByEmail(userDto.getEmail());
         if (exists != null) {
             throw new EmailAlreadyExists();
         }
-        User userByUsername = userRepository.findByUsername(userDto.getUsername());
+        UserEntity userByUsername = userRepository.findByUsername(userDto.getUsername());
         if (userByUsername != null) {
             throw new UsernameAlreadyExists();
         }
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setId(UUID.randomUUID().toString());
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());

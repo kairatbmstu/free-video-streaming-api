@@ -1,13 +1,14 @@
 package com.free.freevideostreamingapi.service;
 
 
-import com.free.freevideostreamingapi.dto.ChannelDto;
-import com.free.freevideostreamingapi.dto.VideoDto;
-import com.free.freevideostreamingapi.entity.Channel;
+import com.free.freevideostreamingapi.application.dto.ChannelDto;
+import com.free.freevideostreamingapi.application.dto.VideoDto;
 import com.free.freevideostreamingapi.exception.ObjectNotFound;
-import com.free.freevideostreamingapi.repository.ChannelRepository;
-import com.free.freevideostreamingapi.repository.SubscriptionRepository;
-import com.free.freevideostreamingapi.repository.VideoRepository;
+import com.free.freevideostreamingapi.infrastucture.entity.ChannelEntity;
+import com.free.freevideostreamingapi.infrastucture.repository.ChannelRepository;
+import com.free.freevideostreamingapi.infrastucture.repository.SubscriptionRepository;
+import com.free.freevideostreamingapi.infrastucture.repository.VideoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +33,12 @@ public class ChannelService {
     VideoRepository videoRepository;
 
     public ChannelDto getChannel(@PathVariable String id) {
-        Optional<Channel> channelOpt = channelRepository.findById(id);
+        Optional<ChannelEntity> channelOpt = channelRepository.findById(id);
         if (!channelOpt.isPresent()) {
             throw new ObjectNotFound();
         }
 
-        Channel channel = channelOpt.get();
+        ChannelEntity channel = channelOpt.get();
         ChannelDto channelDto = new ChannelDto();
         channelDto.setTitle(channel.getTitle());
         channelDto.setDescription(channel.getDescription());

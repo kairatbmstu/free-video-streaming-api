@@ -1,7 +1,8 @@
 package com.free.freevideostreamingapi.service;
 
-import com.free.freevideostreamingapi.entity.VideoFile;
-import com.free.freevideostreamingapi.repository.VideoFileRepository;
+import com.free.freevideostreamingapi.infrastucture.entity.VideoFileEntity;
+import com.free.freevideostreamingapi.infrastucture.repository.VideoFileRepository;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ public class VideoFilesConverter {
     @Autowired
     VideoFileRepository videoFileRepository;
 
-    public void videoFilesProcessing(VideoFile videoFile) throws IOException, InterruptedException {
+    public void videoFilesProcessing(VideoFileEntity videoFile) throws IOException, InterruptedException {
         log.info(" Start Video File Processing...");
 
         if (videoFile == null) {
